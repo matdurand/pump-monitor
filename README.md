@@ -12,15 +12,15 @@ The you will also need to create an application in the google developer console,
 
 - Install raspbian on your pi
 - Follow the installation instruction of `auditok` [https://github.com/amsehili/auditok#installation]
-- The install node on your raspberry pi.
-- The clone this repository
-- Go into the clone folder, and run `npm install`
+- Install `nodejs` on your raspberry pi.
+- Clone this repository
+- Go into the cloned folder, and run `npm install`
 - You will need to following arguments to run auditok:
   - `-e` the energy level needed to record a pump run. Something in the line of `44` or `45` should work
   - `-n` the minimum number of second a pump run last. The goal is to have a large enough value to avoid false positive, when someone or something is making noise near the microphone
   - `-m` the maximum number of second a pump run last. The goal is to have a value that cover normal use cases. If a run last more that the value of `-m`, it will count as 2 runs and the second one will trigger an alert
   - `-s` the number of second of silence needed to stop a detection. Something in the line of `-s 0.1` should be fine
-  - `-A` the usb device index for the microphone, depending on your setup. You can try 0, 1, 2 ... until it works
+  - `-I` the usb device index for the microphone, depending on your setup. You can try 0, 1, 2 ... until it works
   - `-r` use `44100`
   - `-c` channel, use `1`
   - `-F` sound buffer size, `4096` should be enough, but you can make it bigger if you have an error about overflow

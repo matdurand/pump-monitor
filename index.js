@@ -36,15 +36,23 @@ if (googleSheetId && clientSecretFile) {
     const endTime = parseFloat(parts[2]);
     console.log("Pump ran for :" + (endTime - beginTime) + " seconds");
 
-    gDoc.useServiceAccountAuth(creds, () => {
-      gDoc.addRow(
-        1,
-        {
-          date: new Date().toUTCString(),
-          duration: endTime - beginTime
-        },
-        () => null
-      );
+    gDoc.useServiceAccountAuth(creds, err => {
+      if (err) {
+        console.err(err);
+      } else {
+        gDoc.addRow(
+          1,
+          {
+            date: new Date().toUTCString(),
+            duration: endTime - beginTime
+          },
+          err => {
+            if (err) {
+              console.err(err);
+            }
+          }
+        );
+      }
     });
 
     if (
@@ -68,7 +76,7 @@ const sendAlert = (lastRun, duration) => {
     ". The expected cooldown between runs is " +
     expectedDowntime +
     " seconds";
-  var data = {
+  const data = {
     from: mailgunSender,
     to: alertEmail,
     subject: "Pump alert",
